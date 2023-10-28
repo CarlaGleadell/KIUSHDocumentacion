@@ -1,0 +1,383 @@
+-- MySQL Workbench Forward Engineering
+
+SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
+SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
+SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
+
+-- -----------------------------------------------------
+-- Schema mydb
+-- -----------------------------------------------------
+SHOW WARNINGS;
+-- -----------------------------------------------------
+-- Schema BDKIUSH
+-- -----------------------------------------------------
+DROP SCHEMA IF EXISTS `BDKIUSH` ;
+
+-- -----------------------------------------------------
+-- Schema BDKIUSH
+-- -----------------------------------------------------
+CREATE SCHEMA IF NOT EXISTS `BDKIUSH` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_0900_ai_ci ;
+SHOW WARNINGS;
+USE `BDKIUSH` ;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`curso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`curso` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`curso` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(80) NOT NULL,
+  `descripcion` VARCHAR(80) NOT NULL,
+  `fechas` VARCHAR(255) NOT NULL,
+  `horarios` VARCHAR(45) NOT NULL,
+  `lugar` VARCHAR(45) NOT NULL,
+  `estado` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 6
+DEFAULT CHARACTER SET = utf8mb4
+COLLATE = utf8mb4_0900_ai_ci;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`permiso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`permiso` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`permiso` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 13
+DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `ID_PERMISO_IND` ON `BDKIUSH`.`permiso` (`id` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`rol`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`rol` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`rol` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 10
+DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `ID_ROL_IND` ON `BDKIUSH`.`rol` (`id` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`rol_permiso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`rol_permiso` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`rol_permiso` (
+  `id_rol` INT NOT NULL,
+  `id_permiso` INT NOT NULL,
+  PRIMARY KEY (`id_rol`, `id_permiso`),
+  CONSTRAINT `fk_rol_permiso_permiso`
+    FOREIGN KEY (`id_permiso`)
+    REFERENCES `BDKIUSH`.`permiso` (`id`),
+  CONSTRAINT `fk_rol_permiso_rol`
+    FOREIGN KEY (`id_rol`)
+    REFERENCES `BDKIUSH`.`rol` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `ID_ROL_PERMISO_IND` ON `BDKIUSH`.`rol_permiso` (`id_permiso` ASC, `id_rol` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `FKASO_ROL_IND` ON `BDKIUSH`.`rol_permiso` (`id_rol` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `FKASO_PER_idx` ON `BDKIUSH`.`rol_permiso` (`id_permiso` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`usuario`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`usuario` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`usuario` (
+  `id` INT NOT NULL AUTO_INCREMENT,
+  `nombre` VARCHAR(255) NOT NULL,
+  `email` VARCHAR(255) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB
+AUTO_INCREMENT = 27
+DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `UN_USUARIO` ON `BDKIUSH`.`usuario` (`email` ASC, `nombre` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `ID_USUARIO_IND` ON `BDKIUSH`.`usuario` (`id` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`usuario_rol`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`usuario_rol` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`usuario_rol` (
+  `id_usuario` INT NOT NULL,
+  `id_rol` INT NOT NULL,
+  PRIMARY KEY (`id_usuario`, `id_rol`),
+  CONSTRAINT `fk_usuario_rol_rol`
+    FOREIGN KEY (`id_rol`)
+    REFERENCES `BDKIUSH`.`rol` (`id`),
+  CONSTRAINT `fk_usuario_rol_usuario`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `BDKIUSH`.`usuario` (`id`))
+ENGINE = InnoDB
+DEFAULT CHARACTER SET = latin1;
+
+SHOW WARNINGS;
+CREATE UNIQUE INDEX `ID_USUARIO_ROL_IND` ON `BDKIUSH`.`usuario_rol` (`id_rol` ASC, `id_usuario` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `FKVIN_USU_IND` ON `BDKIUSH`.`usuario_rol` (`id_usuario` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `FKVIN_ROL_idx` ON `BDKIUSH`.`usuario_rol` (`id_rol` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`direccion`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`direccion` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`direccion` (
+  `País` VARCHAR(100) NOT NULL,
+  `Localidad` VARCHAR(100) NOT NULL,
+  `Provincia` VARCHAR(100) NOT NULL,
+  `CodPostal` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`CodPostal`))
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`tipo`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`tipo` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`tipo` (
+  `id` INT NOT NULL,
+  `nombre` VARCHAR(45) NOT NULL,
+  PRIMARY KEY (`id`))
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`integrantes`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`integrantes` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`integrantes` (
+  `id` INT NOT NULL,
+  `nombres` VARCHAR(45) NOT NULL,
+  `apellidos` VARCHAR(45) NOT NULL,
+  `dni` VARCHAR(45) NOT NULL,
+  `titulo` VARCHAR(45) NOT NULL,
+  `instituto` VARCHAR(45) NULL,
+  `categoriaDocente` VARCHAR(45) NULL,
+  `dedicacion` VARCHAR(45) NOT NULL,
+  `telefono` VARCHAR(45) NOT NULL,
+  `horasActividad` VARCHAR(45) NOT NULL,
+  `rol` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `organizacion` VARCHAR(45) NULL,
+  `nivelEstudios` VARCHAR(45) NULL,
+  `direccion` VARCHAR(45) NULL,
+  `direccion_CodPostal` VARCHAR(45) NOT NULL,
+  `tipo_id` INT NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_integrantes_direccion1`
+    FOREIGN KEY (`direccion_CodPostal`)
+    REFERENCES `BDKIUSH`.`direccion` (`CodPostal`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_integrantes_tipo1`
+    FOREIGN KEY (`tipo_id`)
+    REFERENCES `BDKIUSH`.`tipo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_integrantes_direccion1_idx` ON `BDKIUSH`.`integrantes` (`direccion_CodPostal` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_integrantes_tipo1_idx` ON `BDKIUSH`.`integrantes` (`tipo_id` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`carrera`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`carrera` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`carrera` (
+  `Cod` INT ZEROFILL NOT NULL,
+  `Nombre` VARCHAR(100) NOT NULL,
+  PRIMARY KEY (`Cod`))
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`persona`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`persona` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`persona` (
+  `id` INT NOT NULL,
+  `nombres` VARCHAR(45) NOT NULL,
+  `apellidos` VARCHAR(45) NOT NULL,
+  `email` VARCHAR(45) NOT NULL,
+  `dni` VARCHAR(45) NOT NULL,
+  `estado` VARCHAR(45) NOT NULL,
+  `pago` TINYINT NULL,
+  `nota` VARCHAR(45) NULL,
+  `asistencia` VARCHAR(45) NULL,
+  `tipo_id` INT NOT NULL,
+  `carrera_Cod` INT ZEROFILL NOT NULL,
+  PRIMARY KEY (`id`),
+  CONSTRAINT `fk_persona_tipo1`
+    FOREIGN KEY (`tipo_id`)
+    REFERENCES `BDKIUSH`.`tipo` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_persona_carrera1`
+    FOREIGN KEY (`carrera_Cod`)
+    REFERENCES `BDKIUSH`.`carrera` (`Cod`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_persona_tipo1_idx` ON `BDKIUSH`.`persona` (`tipo_id` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_persona_carrera1_idx` ON `BDKIUSH`.`persona` (`carrera_Cod` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`usuario_curso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`usuario_curso` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`usuario_curso` (
+  `id_curso` INT NOT NULL,
+  `id_usuario` INT NOT NULL,
+  CONSTRAINT `fk_usuario_curso_curso1`
+    FOREIGN KEY (`id_curso`)
+    REFERENCES `BDKIUSH`.`curso` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_usuario_curso_usuario1`
+    FOREIGN KEY (`id_usuario`)
+    REFERENCES `BDKIUSH`.`usuario` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_usuario_curso_curso1_idx` ON `BDKIUSH`.`usuario_curso` (`id_curso` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_usuario_curso_usuario1_idx` ON `BDKIUSH`.`usuario_curso` (`id_usuario` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`curso_inscripto`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`curso_inscripto` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`curso_inscripto` (
+  `id_curso` INT NOT NULL,
+  `id_inscripto` INT NOT NULL,
+  CONSTRAINT `fk_curso_inscripto_curso1`
+    FOREIGN KEY (`id_curso`)
+    REFERENCES `BDKIUSH`.`curso` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_curso_inscripto_inscripto1`
+    FOREIGN KEY (`id_inscripto`)
+    REFERENCES `BDKIUSH`.`persona` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_curso_inscripto_curso1_idx` ON `BDKIUSH`.`curso_inscripto` (`id_curso` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_curso_inscripto_inscripto1_idx` ON `BDKIUSH`.`curso_inscripto` (`id_inscripto` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+-- -----------------------------------------------------
+-- Table `BDKIUSH`.`integrantes_curso`
+-- -----------------------------------------------------
+DROP TABLE IF EXISTS `BDKIUSH`.`integrantes_curso` ;
+
+SHOW WARNINGS;
+CREATE TABLE IF NOT EXISTS `BDKIUSH`.`integrantes_curso` (
+  `id_curso` INT NOT NULL,
+  `id_director` INT NOT NULL,
+  CONSTRAINT `fk_director_curso_curso1`
+    FOREIGN KEY (`id_curso`)
+    REFERENCES `BDKIUSH`.`curso` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION,
+  CONSTRAINT `fk_director_curso_director1`
+    FOREIGN KEY (`id_director`)
+    REFERENCES `BDKIUSH`.`integrantes` (`id`)
+    ON DELETE NO ACTION
+    ON UPDATE NO ACTION)
+ENGINE = InnoDB;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_director_curso_curso1_idx` ON `BDKIUSH`.`integrantes_curso` (`id_curso` ASC) VISIBLE;
+
+SHOW WARNINGS;
+CREATE INDEX `fk_director_curso_director1_idx` ON `BDKIUSH`.`integrantes_curso` (`id_director` ASC) VISIBLE;
+
+SHOW WARNINGS;
+
+SET SQL_MODE=@OLD_SQL_MODE;
+SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
+SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;

@@ -1,0 +1,5 @@
+use bdkiush;
+insert into `tipo` values (1,'alumno');
+insert into `tipo` values (2,'docente');
+insert into `tipo` values (3,'no docente');
+insert into `tipo` values (4,'externo');

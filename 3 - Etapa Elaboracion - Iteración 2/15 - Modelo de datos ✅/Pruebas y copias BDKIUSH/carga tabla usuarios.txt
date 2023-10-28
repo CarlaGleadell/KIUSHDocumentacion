@@ -1,0 +1,7 @@
+use BDKIUSH;
+
+
+INSERT INTO `usuario` VALUES (1,'Carla Gleadell',  'carlagleadell@gmail.com' );
+INSERT INTO `usuario` VALUES ( 2,'Yohana Bahamonde',  'bahamondeyohana7@gmail.com');
+INSERT INTO `usuario` VALUES (3, 'Jose Martín Chuchuy ',  'martinj_76@hotmail.com');
+INSERT INTO `usuario` VALUES (4,'Eder Dos Santos','esantos@uarg.unpa.edu.ar');
