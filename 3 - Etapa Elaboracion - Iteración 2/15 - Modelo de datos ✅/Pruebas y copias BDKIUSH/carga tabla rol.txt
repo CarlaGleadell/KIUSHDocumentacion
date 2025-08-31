@@ -1,5 +1,0 @@
-use BDKIUSH;
-
-INSERT INTO `rol` VALUES (8,"Usuario común");
-INSERT INTO `rol` VALUES (7,"Administrativo");
-

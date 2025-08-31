@@ -1,6 +1,0 @@
-use BDKIUSH;
-INSERT INTO `curso` VALUES (1,'Carpinteria', 'Madera, herramientas', '2023-09-10', '2023-09-11', "Aula A5", 0,2),
-( 2,'HTML8', 'Codigo', '2023-10-20', '2023-10-25', 'Aula A5 UNPA - UARG', 1, 3),
-(3, 'Python ', 'Progamacion nivel 3', '2023-09-10', '2023-09-10', 'Aula B9 UNPA - UARG', 1, 4),
-(4,'REACT', 'Programacion basica','2023-09-10', '2023-09-10','Aula B10 UNPA - UARG', 1, 2),
-(5,'Prevencion contra el suicidio', 'Charla sobre salud mental','2023-09-10', '2023-09-10', 'Aula B11 UNPA - UARG', 1, 2);
