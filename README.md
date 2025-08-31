@@ -5,7 +5,7 @@
 Su objetivo es digitalizar la inscripción, administración de cursos y exportación de datos al sistema GEDIC, garantizando seguridad, trazabilidad y facilidad de uso para personal administrativo de la secretaría de extensión de la Universidad Nacional de la Patagonia Austral - Unidad Académica Río Gallegos.
 
 <p align="center">
-  <img src="assets/KIUSH.png" alt="Logo KIUSH" width="400"/>
+  <img src="assets/LOGOKIUSH.png" alt="Logo KIUSH" width="400"/>
 </p>
 
 ---
