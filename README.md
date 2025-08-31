@@ -10,6 +10,13 @@ Su objetivo es digitalizar la inscripción, administración de cursos y exportac
 
 ---
 
+## 🔗 Repositorios relacionados
+
+- 📚 [Repositorio de Documentación](https://github.com/CarlaGleadell/KIUSHDocumentacion) 
+- 💻 [Repositorio de Código](https://github.com/CarlaGleadell/KIUSH)
+
+---
+
 ## 📂 Estructura del Repositorio
 
 ```plaintext
